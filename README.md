@@ -1,106 +1,81 @@
 # ProjectArchitect
 
-## Overview
-
-**ProjectArchitect** is a Python-based agent designed to automate the creation of a project’s file system based on a well-defined architecture. The agent reads an input description (architecture) and generates directories, files, and writes relevant code to the specified files. This tool is ideal for setting up the skeleton of projects involving various programming languages and frameworks, making rapid prototyping faster and more efficient.
+**ProjectArchitect** is a Python-based agent that automatically generates a project file system and populates it with appropriate code based on architecture descriptions. It simplifies rapid prototyping by leveraging language models like **OpenAI's GPT-4** to read architecture inputs and build the corresponding file structure with relevant code.
 
 ## Features
 
-- Automatically reads architecture descriptions and creates the corresponding file system.
-- Adds relevant code to each file in accordance with the architecture.
-- Integrates with **OpenAI’s GPT-4** (Other LLMs can be integrated in the future).
-- Can be easily extended for different programming languages and projects (e.g., FastAPI, Flask, etc.).
-- Environment variables managed securely via `.env` file, including the OpenAI API key.
+- **Automated File System Creation**: Generates directories and files based on architecture descriptions.
+- **Code Injection**: Populates created files with relevant content.
+- **Multi-LLM Support**: Supports multiple language models (e.g., OpenAI, Anthropic).
+- **Environment Management**: Securely manages sensitive information like API keys using a `.env` file.
 
-## Setup
+## Installation
 
-### 1. Clone the Repository
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/yourusername/ProjectArchitect.git
+   cd ProjectArchitect
+   ```
+
+2. **Install Dependencies**
+
+   Install the required Python packages using `pip`:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Set Up Environment Variables**
+
+   Create a `.env` file in the root directory of the project to store the **OpenAI API Key** (or **Anthropic API Key**, if applicable):
+
+   ```env
+   OPENAI_API_KEY=your_openai_api_key_here
+   ANTHROPIC_API_KEY=your_anthropic_api_key_here  # Optional, if using Anthropic models
+   ```
+
+## Usage
+
+Run the `architect.py` script with the following parameters:
 
 ```bash
-git clone https://github.com/ashwin271/project-architect.git
-cd ProjectArchitect
+python architect.py --name <project_name> --description <path_to_architecture.txt> --llm <llm_name>
 ```
 
-### 2. Install Dependencies
+### Parameters
 
-You'll need **Python 3.8+** to run this project. Install the required dependencies using:
+- `--name` (required): Name of the project/directory to create.
+- `--description` (optional): Path to the architecture description file. If not provided, you will be prompted to enter the architecture manually.
+- `--llm` (optional): LLM to use for generating the structure:
+  - `openai` (default): Uses OpenAI's GPT-4.
+  - `anthropic`: Intended for Anthropic's models (e.g., Claude).
+
+### Example Command
 
 ```bash
-pip install -r requirements.txt
+python architect.py --name my_fastapi_backend --description architecture.txt --llm openai
 ```
 
-### 3. Create a `.env` File
-
-Create a `.env` file in the root folder of the project, and add the OpenAI API key in it:
-
-```bash
-OPENAI_API_KEY=your_openai_api_key_here
-```
-
-### 4. Prepare an Architecture Description File
-
-Create a text file like `architecture.txt` with a detailed architecture of what you want the project to look like. Example structure:
+### Example Architecture Description (`architecture.txt`)
 
 ```plaintext
-FastAPI Backend:
 backend/
+├── .env
 ├── main.py                 # FastAPI entry point
-├── auth.py                 # User authentication and JWT management
-├── models.py               # SQLAlchemy models
-├── database.py             # DB setup with SQLAlchemy
+├── auth.py                 # Handles authentication, JWT generation
+├── datasets.py             # Manages dataset uploads
+├── validate.py             # Validates datasets
+... also contains code for each files
 ```
-
-### 5. Run the Agent
-
-You can now run the agent to generate the file system based on your architecture description:
-
-```bash
-python create_project_structure.py --name <project_name> --description <path_to_architecture.txt>
-```
-
-Example:
-
-```bash
-python create_project_structure.py --name my_fastapi_backend --description architecture.txt
-```
-
-### Example Architecture Input
-
-Here’s an example of how your architecture file might look:
-
-```plaintext
-backend/
-├── main.py                 # FastAPI application entry
-├── auth.py                 # Handles authentication, OAuth, JWT
-├── models.py               # SQLAlchemy/ORM models
-├── database.py             # DB setup for SQLAlchemy (SQLite or PostgreSQL, optional)
-```
-
-After running, your directory structure will be generated based on the input, and the output will be similar to:
-
-```plaintext
-my_fastapi_backend/
-├── main.py
-├── auth.py
-├── models.py
-├── database.py
-└── .env
-```
-
-## Requirements
-
-- Python 3.8+
-- OpenAI GPT-4 (or necessary LLM) API Key
 
 ## Future Enhancements
 
-- **Content Merge**: Option to merge content instead of overwriting when files already exist.
-- **Multi-LLM Support**: Expand to support more LLM providers (e.g., Anthropic’s Claude).
-- **Interactive File Handling**: Provide an interactive option before overwriting existing files.
-- **Template Support**: Add support for reusable templates.
-- **Automation with Git**: Auto-commit the structured project into an initialized Git repository.
+- **Merging Existing Content**: Avoid overwriting files by merging content intelligently.
+- **Interactive Prompts**: Ask users whether to overwrite, skip, or back up files.
+- **Automatic Git Initialization**: Option to initialize a Git repository after project creation.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue.
+Contributions are welcome! Please fork the repository and submit a pull request.
 
