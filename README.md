@@ -17,7 +17,7 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/ProjectArchitect.git
+git clone https://github.com/ashwin271/project-architect.git
 cd ProjectArchitect
 ```
 
